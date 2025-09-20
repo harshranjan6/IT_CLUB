@@ -1,0 +1,219 @@
+#hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: #0b0f1a;
+  z-index: 1;
+  position: relative;
+  overflow: hidden;
+  top: 0;
+ 
+}
+
+#hero h1 {
+  font-size: 3.8rem;
+  font-weight: bold;
+  padding: 40px;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  background: linear-gradient(90deg, #00c6ff, #ff6ec4, #00ff0d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 400% 400%;
+  animation: gradientShift 8s infinite;
+  box-shadow: 0 0 15px rgb(3, 99, 216);
+  position: relative;
+  z-index: 2;
+}
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+#slogan {
+  font-size: 1.4rem;
+  margin-top: 35px;
+  font-weight: 600;
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+#slogan:hover {
+  animation: wave 1s infinite;
+}
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1deg);
+  }
+  50% {
+    transform: rotate(-1deg);
+  }
+  75% {
+    transform: rotate(1deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.menu-btn {
+  margin-top: 30px;
+  padding: 10px 24px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ff00cc, #3333ff, #00ff99);
+  box-shadow: 0 0 10px rgba(204, 196, 196, 0.6);
+  transition: 0.3s;
+  z-index: 2;
+  overflow: hidden;
+  position: fixed;
+  right: 28px;
+}
+.menu-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+} 
+
+/* Sections */
+section {
+  min-height: 80vh;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+  position: relative;
+  
+}
+section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+section p {
+  max-width: 700px;
+  font-size: 1.1rem;
+  color: #ddd;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+} /* Notice Board */
+.notice-board {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 700px;
+  text-align: left;
+  overflow: hidden;
+}
+.notice {
+  margin: 10px 0;
+  padding: 10px;
+  border-left: 4px solid #ffeb3b;
+  animation: slideIn 1s ease;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Background canvas */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#introduction{
+    color: #ffeb3b;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    position: relative;
+    background-color: #09091d;
+   box-shadow: 0 0 25px rgba(14, 28, 98, 0.4);
+}
+#introduction:hover {
+    box-shadow: 0 0 25px rgba(6, 35, 184, 0.4);
+}
+#vision{
+    color: #ffeb3b;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    position: relative;
+    background-color: #0b0f1a;
+    box-shadow: 0 0 25px rgba(10, 46, 226, 0.4);
+}
+#vision:hover {
+    box-shadow: 0 0 25px rgba(6, 35, 184, 0.4);
+}
+#mission{
+    color: #ffeb3b;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    position: relative;
+    background-color: #09091d;
+   box-shadow: 0 0 25px rgba(14, 28, 98, 0.4);
+   
+}
+#mission:hover {
+    box-shadow: 0 0 25px rgba(6, 35, 184, 0.4);
+}
+#contact{
+    color: #ffeb3b;
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-align: center;
+    position: relative;
+    background-color: #0b0f1a;
+    box-shadow: 0 0 25px rgba(10, 46, 226, 0.4);
+}
+#contact:hover {
+    box-shadow: 0 0 25px rgba(6, 35, 184, 0.4);
+}
+
+@media (max-width: 768px) {
+  #hero {
+     margin-top: -20px;
+  }
+  #slogan {
+    font-size: 1rem;
+    margin-top: 20px;
+  }
+  .menu-btn {
+    padding: 8px 20px;
+    font-size: 1rem;
+    right: 20px;
+  }
+}

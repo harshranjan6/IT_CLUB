@@ -1,0 +1,119 @@
+/* === Reset === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+/* === Page Background === */
+body {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;   /* stack heading + form vertically */
+  align-items: center;      /* center everything horizontally */
+  padding: 40px 20px;
+  color: #333;
+}
+
+/* === Heading === */
+header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+header .subtitle {
+  font-size: 1rem;
+  color: #e0e0e0;
+  margin-top: 5px;
+}
+
+/* === Quiz Form === */
+.quiz-form {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  max-width: 600px;
+  text-align: center; /* center questions inside the form */
+}
+
+.question {
+  margin-bottom: 25px;
+}
+
+.question label {
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: block;
+  color: #444;
+  font-size: 1.1rem;
+}
+
+/* === Dropdowns === */
+.question select {
+  width: 80%; /* keep dropdown narrower, looks centered */
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  background: #f9f9f9;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  margin: 0 auto; /* ensures centered dropdown */
+  display: block;
+}
+
+.question select:focus {
+  border-color: #667eea;
+  outline: none;
+  background: #fff;
+  box-shadow: 0 0 8px rgba(102, 126, 234, 0.4);
+}
+
+/* === Button === */
+.btn {
+  display: block;
+  margin: 20px auto 0;
+  width: 80%;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #5a6fd6, #6b3d8f);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* === Mobile Friendly === */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  .quiz-form {
+    padding: 20px;
+  }
+  .question select,
+  .btn {
+    width: 100%;
+  }
+}

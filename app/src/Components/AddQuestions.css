@@ -1,0 +1,70 @@
+/* Container */
+.admin-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Title */
+.admin-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Form */
+.admin-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-form label {
+  margin: 10px 0 5px;
+  font-weight: 600;
+  color: #555;
+}
+
+/* Inputs */
+.admin-form input {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.admin-form input:focus {
+  border-color: #007bff;
+}
+
+/* Button */
+.btn-submit {
+  padding: 12px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 15px;
+  transition: background 0.2s;
+}
+
+.btn-submit:hover {
+  background: #0056b3;
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+  .admin-container {
+    margin: 20px;
+    padding: 20px;
+  }
+}
