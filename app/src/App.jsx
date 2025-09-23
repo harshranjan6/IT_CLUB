@@ -13,6 +13,10 @@ import PrivateRoute from './Components/PrivateRoute';
 import Login from './Components/Login';
 import HandleRegister from './Components/HandleRegister';
 import './App.css';
+import HackathonDetails from './pages/Hackathon/HackathonDetails';
+import HackathonList from './pages/Hackathon/HackthonList';
+import HackathonLeaderboard from './pages/Hackathon/HackathonLeaderboard';
+import HackathonSubmit from './pages/Hackathon/HackathonSubmit';
 
 
 function App() {
@@ -29,6 +33,10 @@ function App() {
         <Route path='/register' element={<HandleRegister />} />
         <Route path='/quiz' element={<Quiz />} />
         <Route path='/add-question' element={<PrivateRoute><AddQuestion /></PrivateRoute>} />
+        <Route path='/hackathonDetails' element={<HackathonDetails />}></Route>
+        <Route path='/hackathonList' element={<HackathonList />}></Route>
+        <Route path='/hackathonLeaderBoard' element={<HackathonLeaderboard />}></Route>
+        <Route path='/hackathonSubmit' element={<HackathonSubmit />}></Route>
         <Route path='/contact' element={<Contect />} />
       </Routes>
       <Footer />

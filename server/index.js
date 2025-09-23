@@ -11,7 +11,8 @@ const mongoose = require("mongoose");
 const User = require("./models/user.js");
 const Question = require("./models/question.js");
 const authMiddleware = require("./Middleware/authMiddleware.js");
-
+const hackathonRoutes = require("./routes/hackathonRoutes.js")
+const submissionRoutes = require("./routes/submissionRoutes.js")
 
 // CORS setup (allow frontend dev server)
 const corsOptions = {
@@ -122,6 +123,12 @@ app.get("/quiz", authMiddleware, async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
+
+// routes
+app.use("/hackathon", hackathonRoutes)
+
+app.use("/api/submissions", submissionRoutes)
+
 
 // Start Server
 const db = require("./database/db.js");
