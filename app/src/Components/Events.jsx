@@ -13,7 +13,7 @@ import box6 from "../assets/box6.jpg";
 const Events = () => {
   const navigate = useNavigate();
   const Hackthon = () => {
-    navigate("/hackathonDetails")
+    navigate("/events/hackathon")
   }
   const gotoquiz =() =>{
     navigate("/quiz");

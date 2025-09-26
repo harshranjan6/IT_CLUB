@@ -1,0 +1,78 @@
+.hackathon-list-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hackathon-list-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 24px;
+  text-align: center;
+ color: #d8840d;
+}
+
+.hackathon-grid {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 640px) {
+  .hackathon-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 768px) {
+  .hackathon-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.hackathon-card {
+  border: 1px solid #67a42a;
+  border-radius: 12px;
+  padding: 16px;
+  background: linear-gradient(45deg, rgb(163, 102, 163), rgb(219, 192, 197));
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hackathon-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(239, 235, 235, 0.614);
+}
+
+.hackathon-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #995a00;
+}
+
+.hackathon-deadline {
+  font-size: 0.9rem;
+  color: #20044b;
+  margin-bottom: 8px;
+}
+
+.hackathon-description {
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+  color: #000;
+}
+
+.hackathon-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  background: linear-gradient(90deg,rgb(56, 56, 38),rgb(38, 57, 38),rgb(48, 39, 23),rgb(79, 22, 22));
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 0.2s ease;
+}
+
+.hackathon-btn:hover {
+  background:linear-gradient(45deg,rgb(79, 22, 22),rgb(48, 39, 23),rgb(38, 57, 38),rgb(56, 56, 38));
+}

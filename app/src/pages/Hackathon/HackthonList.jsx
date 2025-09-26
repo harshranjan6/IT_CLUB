@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import "./HackathonList.css"; 
 
 const HackathonList = () => {
   const [hackathons, setHackathons] = useState([]);
@@ -9,7 +10,7 @@ const HackathonList = () => {
   useEffect(() => {
     const fetchHackathons = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/api/hackathons");
+        const res = await axios.get("http://localhost:6969/api/hackathons");
         setHackathons(res.data);
       } catch (err) {
         console.error("Error fetching hackathons", err);
@@ -20,23 +21,20 @@ const HackathonList = () => {
     fetchHackathons();
   }, []);
 
-  if (loading) return <p className="text-center mt-6">Loading...</p>;
+  if (loading) return <p className="hackathon-loading">Loading...</p>;
 
   return (
-    <div className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Available Hackathons</h1>
-      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+    <div className="hackathon-list-container">
+      <h1 className="hackathon-list-title">Available Hackathons</h1>
+      <div className="hackathon-grid">
         {hackathons.map(h => (
-          <div key={h._id} className="border rounded-xl p-4 shadow-md bg-white">
-            <h2 className="text-xl font-semibold">{h.title}</h2>
-            <p className="text-gray-600 mb-2">
+          <div key={h._id} className="hackathon-card">
+            <h2 className="hackathon-card-title ">{h.title}</h2>
+            <p className="hackathon-deadline">
               Deadline: {new Date(h.deadline).toLocaleDateString()}
             </p>
-            <p className="text-sm mb-4">{h.description}</p>
-            <Link
-              to={`/events/hackathon/${h._id}`}
-              className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-            >
+            <p className="hackathon-description">{h.description}</p>
+            <Link to={`/events/hackathon/${h._id}`} className="hackathon-btn">
               View Details
             </Link>
           </div>

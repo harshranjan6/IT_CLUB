@@ -6,6 +6,6 @@ const hackathonSchema = new mongoose.Schema({
   problemStatement: String,
   deadline: Date,
   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
-}, { timestamps: true });
+}, { timestamps: true , collection: "hackathon_db"});
 
 module.exports = mongoose.model("Hackathon", hackathonSchema);

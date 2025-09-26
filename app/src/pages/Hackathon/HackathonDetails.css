@@ -1,0 +1,73 @@
+.hackathon-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.hackathon-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #15803d;
+}
+
+.hackathon-deadlines {
+  font-size: 0.9rem;
+  color: #e7c726;
+  margin-bottom: 8px;
+ 
+}
+
+.hackathon-descriptions {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #327f4f;
+}
+
+.hackathon-problem {
+  background-color: #bba43d5b;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.hackathon-problem h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #151414;
+}
+
+.hackathon-problem p{
+  color: #cbc5c5;
+}
+
+
+.hackathon-action {
+  display: flex;
+  gap: 12px;
+}
+
+.hackathon-btns {
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.hackathon-btns.submit {
+  background-color: #3f588f; 
+}
+
+.hackathon-btns.submit:hover {
+  background-color: #1d4ed8;
+}
+
+.hackathon-btns.leaderboard {
+  background-color: #378152; 
+}
+
+.hackathon-btns.leaderboard:hover {
+  background-color: #15803d;
+}

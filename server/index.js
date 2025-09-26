@@ -125,7 +125,7 @@ app.get("/quiz", authMiddleware, async (req, res) => {
 });
 
 // routes
-app.use("/hackathon", hackathonRoutes)
+app.use("/api/hackathons", hackathonRoutes)
 
 app.use("/api/submissions", submissionRoutes)
 
@@ -140,3 +140,5 @@ db().then(() => {
 }).catch(err => {
     console.error("Database connection failed:", err);
 });
+
+

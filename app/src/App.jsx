@@ -25,18 +25,25 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
+
         <Route path='/about' element={<About />} />
+
         <Route path='/projects' element={<Project />} />
+
         <Route path='/resource' element={<Resources />} />
+
         <Route path='/events' element={<Events />} />
+
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<HandleRegister />} />
         <Route path='/quiz' element={<Quiz />} />
         <Route path='/add-question' element={<PrivateRoute><AddQuestion /></PrivateRoute>} />
-        <Route path='/hackathonDetails' element={<HackathonDetails />}></Route>
-        <Route path='/hackathonList' element={<HackathonList />}></Route>
-        <Route path='/hackathonLeaderBoard' element={<HackathonLeaderboard />}></Route>
-        <Route path='/hackathonSubmit' element={<HackathonSubmit />}></Route>
+
+        <Route path='/events/hackathon' element={<HackathonList />}></Route>
+        <Route path='/events/hackathon/:id' element={<HackathonDetails />}></Route>
+        <Route path='/events/hackathon/:id/submit' element={<HackathonSubmit />}></Route>
+        <Route path='/events/hackathon/:id/leaderboard' element={<HackathonLeaderboard />}></Route>
+
         <Route path='/contact' element={<Contect />} />
       </Routes>
       <Footer />
