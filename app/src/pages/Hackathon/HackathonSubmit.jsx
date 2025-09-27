@@ -14,13 +14,23 @@ const HackathonSubmit = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
+        const token = localStorage.getItem("token"); // get tokem from login
+        if(!token){
+          setMessage("You must be logged in to submit.");
+          return;
+        }
+
       await axios.post("http://localhost:6969/api/submissions", {
         hackathonId: id,
         userId: "STUDENT_ID", // TODO: replace with logged-in user from auth context
         repoLink,
         demoLink,
-       
-      });
+      },
+      {
+        headers:{Authorization:`Bearer ${token}`} // send token
+      } 
+    );
+    
       setMessage("✅ Submission successful!");
       setTimeout(() => navigate(`/events/hackathon/${id}/leaderboard`), 1500);
     } catch (err) {

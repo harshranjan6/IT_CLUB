@@ -10,6 +10,7 @@ import Resources from './Components/Resources';
 import Quiz from './Components/Quiz';
 import AddQuestion from './Components/AddQuestion';
 import PrivateRoute from './Components/PrivateRoute';
+import PrivateAdminRoute from './Components/PrivateAdminRoute';
 import Login from './Components/Login';
 import HandleRegister from './Components/HandleRegister';
 import './App.css';
@@ -17,7 +18,9 @@ import HackathonDetails from './pages/Hackathon/HackathonDetails';
 import HackathonList from './pages/Hackathon/HackthonList';
 import HackathonLeaderboard from './pages/Hackathon/HackathonLeaderboard';
 import HackathonSubmit from './pages/Hackathon/HackathonSubmit';
-
+import AdminDashboard from './pages/Admin/AdminDashboard';
+import ManageHackathons from './pages/Admin/ManageHackathons';
+import Sidebar from './Components/Sidebar';
 
 function App() {
   return (
@@ -25,7 +28,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home />} />
-
+        <Route path='/sidebar' element= {<Sidebar/>}></Route>
         <Route path='/about' element={<About />} />
 
         <Route path='/projects' element={<Project />} />
@@ -39,9 +42,12 @@ function App() {
         <Route path='/quiz' element={<Quiz />} />
         <Route path='/add-question' element={<PrivateRoute><AddQuestion /></PrivateRoute>} />
 
+        <Route path='/admin/dashboard' element={<PrivateAdminRoute><AdminDashboard /></PrivateAdminRoute>  }></Route>
+        <Route path='/admin/hackathons' element= {<PrivateAdminRoute><ManageHackathons/></PrivateAdminRoute>}></Route>
+
         <Route path='/events/hackathon' element={<HackathonList />}></Route>
         <Route path='/events/hackathon/:id' element={<HackathonDetails />}></Route>
-        <Route path='/events/hackathon/:id/submit' element={<HackathonSubmit />}></Route>
+        <Route path='/events/hackathon/:id/submit' element={<PrivateRoute><HackathonSubmit /></PrivateRoute>}></Route>
         <Route path='/events/hackathon/:id/leaderboard' element={<HackathonLeaderboard />}></Route>
 
         <Route path='/contact' element={<Contect />} />

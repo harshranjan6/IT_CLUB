@@ -42,7 +42,7 @@ const HackathonLeaderboard = () => {
             .map((s, idx) => (
               <tr key={s._id}>
                 <td>{idx + 1}</td>
-                <td>{s.userId?.name || "Student"}</td>
+                <td>{s.userId?.username || "Unknown"}</td>
                 <td>
                   <a href={s.repoLink} target="_blank" rel="noreferrer" className="leaderboard-link">
                     GitHub

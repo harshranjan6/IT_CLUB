@@ -160,8 +160,8 @@ function Quiz() {
 
           {/* Submit button */}
           {questions.length > 0 && (
-            <section className="submit-btn">
-              <button type="submit" className="btn">
+            <section className="submits-btn">
+              <button type="submit" className="btnms">
                 Submit
               </button>
             </section>

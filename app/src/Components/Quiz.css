@@ -133,12 +133,12 @@ header .subtitle {
 }
 
 /* Submit button */
-.submit-btn {
+.submits-btnms {
   text-align: center;
   margin-top: 30px;
 }
 
-.btn {
+.btnms {
   padding: 14px 28px;
   font-size: 1rem;
   font-weight: bold;
@@ -150,7 +150,7 @@ header .subtitle {
   transition: all 0.3s ease;
 }
 
-.btn:hover {
+.btnms:hover {
   background: linear-gradient(135deg, #2ecc71, #3498db);
   transform: scale(1.05);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
@@ -184,7 +184,7 @@ header .subtitle {
     padding: 20px;
   }
 
-  .btn {
+  .btnms {
     width: 100%;
   }
 }

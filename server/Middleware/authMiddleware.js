@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
+const User = require("../models/user");
 
-function authMiddleware(req, res, next){
+
+async function authMiddleware(req, res, next){
     // get token from headers
     // Expected format : "Bearer <token>"
     const authHeader = req.headers["authorization"];

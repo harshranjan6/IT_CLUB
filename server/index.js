@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 const User = require("./models/user.js");
 const Question = require("./models/question.js");
 const authMiddleware = require("./Middleware/authMiddleware.js");
+const adminMiddleware = require("./Middleware/adminMiddleware.js")
 const hackathonRoutes = require("./routes/hackathonRoutes.js")
 const submissionRoutes = require("./routes/submissionRoutes.js")
 
@@ -102,7 +103,7 @@ app.post("/register", async (req, res) => {
 /**
  * Add Question (Protected)
  */
-app.post("/add-question", authMiddleware, async (req, res) => {
+app.post("/add-question", authMiddleware,adminMiddleware, async (req, res) => {
     try {
         const q = new Question(req.body);
         await q.save();
