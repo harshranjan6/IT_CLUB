@@ -1,26 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AdminLayout from "./AdminLayout";
-import axios from "axios";
+import "./ManageHackathons.css";
 
 const ManageHackathons = () => {
-  const [hackathons, setHackathons] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:6969/api/hackathons")
-      .then(res => setHackathons(res.data))
-      .catch(err => console.error(err));
-  }, []);
+  const hackathons = [
+    { id: 1, name: "Hackathon 1", start: "2025-10-01", end: "2025-10-05" },
+    { id: 2, name: "Hackathon 2", start: "2025-11-10", end: "2025-11-15" },
+  ];
 
   return (
     <AdminLayout>
-      <h1 className="text-2xl font-bold mb-4">Manage Hackathons</h1>
-      <ul>
-        {hackathons.map(h => (
-          <li key={h._id} className="border p-2 mb-2 rounded bg-white">
-            {h.title}
-          </li>
-        ))}
-      </ul>
+      <h1>Manage Hackathons</h1>
+      <button className="add-btn">Add New Hackathon</button>
+
+      <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {hackathons.map((h) => (
+              <tr key={h.id}>
+                <td>{h.name}</td>
+                <td>{h.start}</td>
+                <td>{h.end}</td>
+                <td>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </AdminLayout>
   );
 };

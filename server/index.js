@@ -44,13 +44,13 @@ app.post("/login", async (req, res) => {
         const token = jwt.sign(
             { id: user._id },
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "15m" }
         );
 
         res.json({
             message: "Login successful",
             token,
-            user: { id: user._id, username: user.username, email: user.email }
+            user: { id: user._id, username: user.username, email: user.email, role: user.role }
         });
 
     } catch (err) {
@@ -78,7 +78,8 @@ app.post("/register", async (req, res) => {
         user = new User({
             username,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            role: "student"
         });
         await user.save();
 

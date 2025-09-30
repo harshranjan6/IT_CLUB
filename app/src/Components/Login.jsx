@@ -14,10 +14,16 @@ function Login() {
                 email,
                 password,
             });
-            localStorage.setItem("token", res.data.token); // save token in local storage
+            localStorage.setItem("token", res.data.token)  // save token in local storage
+            localStorage.setItem("user", JSON.stringify(res.data.user)); // save the user or roles in the local storage
             axios.defaults.headers.common['Authorization'] =`Bearer ${res.data.token}`; // set default header for future requests
-
-            navigate("/quiz"); // navigate to protected route
+            
+            if(res.data.user.role === "admin"){
+              navigate("/admin/dashboard")
+            }else{
+               navigate("/quiz"); // navigate to protected route
+            }
+           
         }catch(err){
             console.log("Invalid email or password")
         }
@@ -36,7 +42,7 @@ function Login() {
         
         <input 
         type="password"
-        placeholder='Create Password'
+        placeholder='Enter Password'
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required

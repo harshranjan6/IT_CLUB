@@ -1,13 +1,28 @@
-import React from "react";
-import Sidebar from "../../Components/Sidebar";
+import React, { useState } from "react";
+import Sidebar from "./Sidebar";
+import "./AdminLayout.css";
+import { Menu } from "lucide-react";
 
 const AdminLayout = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1 p-6 bg-gray-100 min-h-screen">
-        {children}
+    <div className="layout">
+      {/* Hamburger button for mobile */}
+      <button
+        className="hamburger"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        <Menu size={28} color="#00e0ff" />
+      </button>
+
+      {/* Sidebar */}
+      <div className={`sidebar-wrapper ${isSidebarOpen ? "open" : ""}`}>
+        <Sidebar closeSidebar={() => setIsSidebarOpen(false)} />
       </div>
+
+      {/* Main content */}
+      <div className="content">{children}</div>
     </div>
   );
 };
