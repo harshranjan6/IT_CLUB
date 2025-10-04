@@ -12,7 +12,7 @@ router.post("/", authMiddleware, async (req, res) => {
     if(!hackathonId || !repoLink){
       return res.status(400).json({error:"hackathonId and repoLink are required"})
     }
-    const submission = new Submission({ hackathonId, userId: req.user.id, repoLink, demoLink });
+    const submission = new Submission({ hackathonId, userId: req.user.id, teamName,repoLink, demoLink, score: null });
     await submission.save();
     res.status(201).json(submission);
   } catch (err) {
@@ -30,5 +30,28 @@ router.get("/hackathon/:id", async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
+// PUT /api/scores/:hackathonId
+router.put("/scores/:hackathonId", authMiddleware, async (req, res) => {
+  try {
+    // Only admin can update scores
+    if (!req.user.isAdmin) {
+      return res.status(403).json({ error: "Access denied" });
+    }
+
+    const { hackathonId } = req.params;
+    const updatedScores = req.body; // [{ teamId, score }, ...]
+
+    for (const { teamId, score } of updatedScores) {
+      await Submission.findByIdAndUpdate(teamId, { score });
+    }
+
+    res.json({ message: "Scores updated successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 module.exports = router;

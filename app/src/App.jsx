@@ -44,11 +44,11 @@ function App() {
 
         <Route path='/register' element={<HandleRegister />}/>
 
-        <Route path='/quiz' element={<Quiz />} />
+        <Route path='/quiz' element={<PrivateRoute><Quiz/></PrivateRoute>} />
 
-        <Route path='/admin/dashboard' element={<PrivateAdminRoute><AdminDashboard /></PrivateAdminRoute>  }></Route>
+        <Route path='/admin/dashboard' element={<PrivateAdminRoute><AdminDashboard /></PrivateAdminRoute>}></Route>
         <Route path='/admin/hackathons' element= {<PrivateAdminRoute><ManageHackathons/></PrivateAdminRoute>}></Route>
-        <Route path='/admin/submissions' element={<PrivateAdminRoute><ManageSubmissions/></PrivateAdminRoute> }></Route>
+        <Route path='/admin/submissions' element={<PrivateAdminRoute><ManageSubmissions/></PrivateAdminRoute>}></Route>
         <Route path='/admin/questions' element={<PrivateAdminRoute><ManageQuestions/></PrivateAdminRoute>}></Route>   
 
         <Route path='/events/hackathon' element={<HackathonList />}></Route>

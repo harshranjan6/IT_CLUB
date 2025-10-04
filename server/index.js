@@ -14,6 +14,8 @@ const authMiddleware = require("./Middleware/authMiddleware.js");
 const adminMiddleware = require("./Middleware/adminMiddleware.js")
 const hackathonRoutes = require("./routes/hackathonRoutes.js")
 const submissionRoutes = require("./routes/submissionRoutes.js")
+const ProjectRoutes= require('./routes/projects.js');
+
 
 // CORS setup (allow frontend dev server)
 const corsOptions = {
@@ -131,9 +133,12 @@ app.use("/api/hackathons", hackathonRoutes)
 
 app.use("/api/submissions", submissionRoutes)
 
+app.use("/projects", ProjectRoutes)
+
 
 // Start Server
 const db = require("./database/db.js");
+
 const PORT = process.env.PORT || 6969;
 db().then(() => {
     app.listen(PORT, () => {

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./Quiz.css";
 
@@ -8,76 +9,85 @@ function Quiz() {
   const [answers, setAnswers] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const [score, setScore] = useState(0);
-
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const questionRefs = useRef({});
 
-  // Fetch questions from backend
   useEffect(() => {
-    const fetchQuestions = async () => {
+    const fetchQuiz = async () => {
+      const token = localStorage.getItem("token");
+      const userStr = localStorage.getItem("user");
+      let user = null;
       try {
-        const token = localStorage.getItem("token");
-        if (!token) {
-          alert("❌ You must be logged in to take the quiz");
-          window.location.href = "/login";
-          return;
-        }
+        user = userStr ? JSON.parse(userStr) : null;
+      } catch {
+        user = null;
+      }
 
+      if (!token || !user) {
+        navigate("/login", { state: { from: "/quiz" } });
+        return;
+      }
+      if (user.role === "admin") {
+        navigate("/admin/dashboard");
+        return;
+      }
+
+      try {
         const res = await axios.get("http://localhost:6969/quiz", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
-
-        console.log("Fetched questions:", res.data);
         setQuestions(res.data);
         if (res.data.length > 0) setCurr(res.data[0]._id);
       } catch (err) {
-        if (err.response && err.response.status === 401) {
-          alert("⚠️ Session expired. Please log in again.");
-          localStorage.removeItem("token");
-          window.location.href = "/login";
-        } else {
-          console.error("Error fetching questions:", err.message);
-        }
+        console.error("Error fetching questions:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchQuestions();
-  }, []);
+    fetchQuiz();
+  }, [navigate]);
 
   const handleSidebarClick = (id) => {
     setCurr(id);
-    questionRefs.current[id]?.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
+    questionRefs.current[id]?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   const handleAnswer = (qId, option) => {
-    setAnswers({ ...answers, [qId]: option });
+    setAnswers((prev) => ({ ...prev, [qId]: option }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let scoreCount = 0;
-
     questions.forEach((q) => {
-      if (answers[q._id] === q.correctAnswer) {
-        scoreCount++;
-      }
+      if (answers[q._id] === q.correctAnswer) scoreCount++;
     });
 
     setScore(scoreCount);
     setSubmitted(true);
+
+    try {
+      const token = localStorage.getItem("token");
+      await axios.post(
+        "http://localhost:6969/quiz/submit",
+        { score: scoreCount },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  if (submitted) {
+  if (loading) return <p>Checking login / loading quiz...</p>;
+
+  if (submitted)
     return (
       <div className="quiz-result">
         <h1>🎉 Quiz Completed!</h1>
         <p>
-          You scored <strong>{score}</strong> out of{" "}
-          <strong>{questions.length}</strong>
+          You scored <strong>{score}</strong> out of <strong>{questions.length}</strong>
         </p>
         <button
           className="btn"
@@ -85,38 +95,30 @@ function Quiz() {
             setAnswers({});
             setSubmitted(false);
             setScore(0);
-            if (questions.length > 0) {
-              setCurr(questions[0]._id);
-            }
+            if (questions.length > 0) setCurr(questions[0]._id);
           }}
         >
           Restart Quiz
         </button>
       </div>
     );
-  }
 
   return (
     <div className="quiz-container">
       <header className="header">
         <h1>📝 General Knowledge Quiz</h1>
-        <p className="subtitle">Choose the correct option from each question.</p>
       </header>
 
-      {/* Sidebar */}
       <aside className="quiz-sidebar">
         <h2>📊 Progress</h2>
         <ul>
           {questions.map((q, index) => {
             const isActive = curr === q._id;
             const isAttempted = !!answers[q._id];
-
             return (
               <li
                 key={q._id}
-                className={`${isActive ? "active" : ""} ${
-                  isAttempted ? "attempted" : "skipped"
-                }`}
+                className={`${isActive ? "active" : ""} ${isAttempted ? "attempted" : "skipped"}`}
                 onClick={() => handleSidebarClick(q._id)}
               >
                 Question {index + 1}
@@ -126,15 +128,10 @@ function Quiz() {
         </ul>
       </aside>
 
-      {/* Main quiz body */}
       <main className="quiz-main">
         <form className="quiz-form" onSubmit={handleSubmit}>
           {questions.map((q, index) => (
-            <div
-              key={q._id}
-              className="question"
-              ref={(el) => (questionRefs.current[q._id] = el)}
-            >
+            <div key={q._id} ref={(el) => (questionRefs.current[q._id] = el)} className="question">
               <label>
                 <strong>
                   {index + 1}. {q.text}
@@ -149,7 +146,6 @@ function Quiz() {
                       value={option}
                       checked={answers[q._id] === option}
                       onChange={() => handleAnswer(q._id, option)}
-                      required={!answers[q._id]} // required until one is picked
                     />
                     {option}
                   </label>
@@ -158,11 +154,10 @@ function Quiz() {
             </div>
           ))}
 
-          {/* Submit button */}
           {questions.length > 0 && (
-            <section className="submits-btn">
+            <section className="submit-btn">
               <button type="submit" className="btnms">
-                Submit
+                Submit Quiz
               </button>
             </section>
           )}
