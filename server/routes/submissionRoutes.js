@@ -1,57 +1,74 @@
 const express = require("express");
 const router = express.Router();
-
 const Submission = require("../models/Submission");
-const authMiddleware = require("../Middleware/authMiddleware")
+const authMiddleware = require("../Middleware/authMiddleware");
+const adminMiddleware = require("../Middleware/adminMiddleware"); // optional if needed
 
-
+// =====================
 // POST new submission
+// =====================
 router.post("/", authMiddleware, async (req, res) => {
   try {
-    const { hackathonId, userId, repoLink, demoLink } = req.body;
-    if(!hackathonId || !repoLink){
-      return res.status(400).json({error:"hackathonId and repoLink are required"})
+    const { hackathonId, teamName, repoLink, demoLink } = req.body;
+
+    // Validate required fields
+    if (!hackathonId || !repoLink) {
+      return res.status(400).json({ error: "hackathonId and repoLink are required" });
     }
-    const submission = new Submission({ hackathonId, userId: req.user.id, teamName,repoLink, demoLink, score: null });
+
+    const submission = new Submission({
+      hackathonId,
+      userId: req.user.id, // comes from auth middleware
+      teamName: teamName || "", // optional
+      repoLink,
+      demoLink: demoLink || "",
+      score: null,
+    });
+
     await submission.save();
-    res.status(201).json(submission);
+    res.status(201).json({ message: "Submission created successfully", data: submission });
   } catch (err) {
+    console.error("Error creating submission:", err);
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
 
+// =====================
 // GET all submissions for a hackathon
-router.get("/hackathon/:id", async (req, res) => {
+// =====================
+router.get("/hackathon/:id", authMiddleware, async (req, res) => {
   try {
     const submissions = await Submission.find({ hackathonId: req.params.id })
-      .populate("userId", "username email"); // show user info
+      .populate("userId", "username email"); // populate user info
     res.json(submissions);
   } catch (err) {
-    res.status(500).json({ error: "Server error" });
+    console.error("Error fetching submissions:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
   }
 });
 
-// PUT /api/scores/:hackathonId
-router.put("/scores/:hackathonId", authMiddleware, async (req, res) => {
+// =====================
+// PUT: Update scores for hackathon submissions (admin only)
+// =====================
+router.put("/scores/:hackathonId", authMiddleware, adminMiddleware, async (req, res) => {
   try {
-    // Only admin can update scores
-    if (!req.user.isAdmin) {
-      return res.status(403).json({ error: "Access denied" });
+    const { hackathonId } = req.params;
+    const updatedScores = req.body; // expect: [{ teamId, score }, ...]
+
+    if (!Array.isArray(updatedScores)) {
+      return res.status(400).json({ error: "Invalid format: should be an array of scores" });
     }
 
-    const { hackathonId } = req.params;
-    const updatedScores = req.body; // [{ teamId, score }, ...]
-
     for (const { teamId, score } of updatedScores) {
+      if (!teamId || typeof score !== "number") continue; // skip invalid
       await Submission.findByIdAndUpdate(teamId, { score });
     }
 
     res.json({ message: "Scores updated successfully" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Server error" });
+    console.error("Error updating scores:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
   }
 });
-
 
 module.exports = router;

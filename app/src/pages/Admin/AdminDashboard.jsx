@@ -1,6 +1,6 @@
 import React from "react";
 import AdminLayout from "./AdminLayout";
-import { BookOpen, FileText, Clipboard, Calendar } from "lucide-react";
+import { Clipboard, FileText, BookOpen, Calendar } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.css";
 
@@ -17,8 +17,8 @@ const AdminDashboard = () => {
   return (
     <AdminLayout>
       <div className="admin-dashboard">
-        <h1 className="title">Welcome, Admin!</h1>
-        <p className="prop">Manage all sections of the platform from here.</p>
+        <h1>Welcome, Admin!</h1>
+        <p className="para">Manage all sections of the platform from here.</p>
 
         <div className="dashboard-grid">
           {sections.map((section) => (

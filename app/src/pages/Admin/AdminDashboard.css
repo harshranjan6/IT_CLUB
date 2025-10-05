@@ -1,48 +1,95 @@
+/* Main container */
 .admin-dashboard {
-  padding: 2rem;
+  padding: 30px;
+  background-color: #2a419c;
   min-height: 100vh;
-  background: linear-gradient(180deg, #12121c, #1b1b2b);
-  color: #fff;
 }
 
-.title {
-  font-size: 2rem;
+/* Page title */
+.admin-dashboard .title {
+  font-size: 2.2rem;
   font-weight: 700;
-  color: #00e0ff;
-  margin-bottom: 0.5rem;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+}
+.para{
+  margin-bottom:3vh ;
 }
 
-.prop {
-  font-size: 1.1rem;
-  margin-bottom: 2rem;
-  color: #cfcfcf;
+/* Subtitle/description */
+.admin-dashboard .prop {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 30px;
 }
 
-.dashboard-grid {
+/* Grid container for dashboard cards */
+.admin-dashboard .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 25px;
 }
 
-.dashboard-card {
-  background: rgba(255, 255, 255, 0.05);
+/* Individual card styling */
+.admin-dashboard .dashboard-card {
+  background-color: #1a1a2e;
+  color: #fff;
+  padding: 25px 20px;
   border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
-.dashboard-card:hover {
+/* Card hover effect */
+.admin-dashboard .dashboard-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 224, 255, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.dashboard-card .icon {
-  margin-bottom: 1rem;
-}
-
-.dashboard-card.disabled {
+/* Disabled card */
+.admin-dashboard .dashboard-card.disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Card icon */
+.admin-dashboard .dashboard-card .icon {
+  margin-bottom: 15px;
+}
+
+/* Card title */
+.admin-dashboard .dashboard-card h2 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: #00e0ff;
+}
+
+/* Card description */
+.admin-dashboard .dashboard-card p {
+  font-size: 0.95rem;
+  color: #cfd8dc;
+  line-height: 1.4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 20px;
+  }
+
+  .admin-dashboard .dashboard-card {
+    padding: 20px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-dashboard .title {
+    font-size: 1.8rem;
+  }
 }

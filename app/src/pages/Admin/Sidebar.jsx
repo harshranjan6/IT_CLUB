@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./Sidebar.css";
+import "./Slidebar.css"; 
 
 const Sidebar = ({ closeSidebar }) => {
   const location = useLocation();
@@ -14,21 +14,19 @@ const Sidebar = ({ closeSidebar }) => {
   ];
 
   return (
-    <div className="main-container">
-      <h2 className="heading">Admin Panel</h2>
-      <div className="main">
-        {links.map((link) => (
-          <Link
-            key={link.name}
-            to={link.path}
-            className={location.pathname === link.path ? "active" : ""}
-            onClick={closeSidebar}
-            style={{ pointerEvents: link.disabled ? "none" : "auto", opacity: link.disabled ? 0.5 : 1 }}
-          >
-            {link.name}
-          </Link>
-        ))}
-      </div>
+    <div className="sidebar">
+      <h2 >Admin Panel</h2>
+      {links.map((link) => (
+        <Link 
+          key={link.name}
+          to={link.path}
+          className={location.pathname === link.path ? "active" : ""}
+          onClick={closeSidebar}
+          style={{ pointerEvents: link.disabled ? "none" : "auto", opacity: link.disabled ? 0.5 : 1 }}
+        >
+          {link.name}
+        </Link>
+      ))}
     </div>
   );
 };

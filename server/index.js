@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const mongoose = require("mongoose");
-
+const db = require("./database/db.js");
 const User = require("./models/user.js");
 const Question = require("./models/question.js");
 const authMiddleware = require("./Middleware/authMiddleware.js");
@@ -15,7 +15,7 @@ const adminMiddleware = require("./Middleware/adminMiddleware.js")
 const hackathonRoutes = require("./routes/hackathonRoutes.js")
 const submissionRoutes = require("./routes/submissionRoutes.js")
 const ProjectRoutes= require('./routes/projects.js');
-
+const ContactRoutes = require("./routes/complain");
 
 // CORS setup (allow frontend dev server)
 const corsOptions = {
@@ -135,9 +135,11 @@ app.use("/api/submissions", submissionRoutes)
 
 app.use("/projects", ProjectRoutes)
 
+app.use("/contact", ContactRoutes);
+
 
 // Start Server
-const db = require("./database/db.js");
+
 
 const PORT = process.env.PORT || 6969;
 db().then(() => {

@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './Components/Home';
 import About from './Components/About';
-import Project from './Components/Project';
+import Project from './pages/Project/Project';
 import Events from './Components/Events';
 import Navbar from './Components/Navbar';
-import Contect from './Components/Contect';
+import Contect from './Components/Contact';
 import Footer from './Components/Footer';
 import Resources from './Components/Resources';
 import Quiz from './Components/Quiz';
@@ -22,6 +22,7 @@ import ManageHackathons from './pages/Admin/ManageHackathons';
 import ManageSubmissions from './pages/Admin/ManageSubmissions';
 import ManageQuestions from './pages/Admin/ManageQuestions';
 import Sidebar from './pages/Admin/Sidebar';
+import ProjectDetails from './pages/Project/ProjectDetails';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Route path='/about' element={<About />} />
 
         <Route path='/projects' element={<Project />} />
+        <Route path='/projects/:id' element={<ProjectDetails/>}></Route>
 
         <Route path='/resource' element={<Resources />} />
 

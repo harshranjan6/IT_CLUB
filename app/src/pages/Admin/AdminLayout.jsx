@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
-import "./AdminLayout.css";
 import { Menu } from "lucide-react";
+import "./AdminLayout.css";
 
 const AdminLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="layout">
-      {/* Hamburger button for mobile */}
+      {/* Hamburger button */}
       <button
         className="hamburger"
         onClick={() => setIsSidebarOpen(!isSidebarOpen)}

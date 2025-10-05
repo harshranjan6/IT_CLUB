@@ -5,7 +5,7 @@ import "./ManageQuestions.css";
 
 const ManageQuestions = () => {
   const [questions, setQuestions] = useState([]);
-  const [showAddForm, setShowAddForm] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const [text, setText] = useState("");
   const [options, setOptions] = useState(["", "", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");
@@ -15,9 +15,8 @@ const ManageQuestions = () => {
 
   // Fetch questions from backend
   const fetchQuestions = async () => {
-    if(!token) return;
     try {
-      const res = await axios.get("http://localhost:6969/get-questions", {
+      const res = await axios.get("http://localhost:6969/api/questions", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setQuestions(res.data);
@@ -31,72 +30,70 @@ const ManageQuestions = () => {
     fetchQuestions();
   }, []);
 
-  // Add new question
-  const handleAddQuestion = async (e) => {
+  const resetForm = () => {
+    setText("");
+    setOptions(["", "", "", ""]);
+    setCorrectAnswer("");
+    setEditingId(null);
+    setShowForm(false);
+  };
+
+  // Add or Edit question
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!token){
-      alert("❌ You must be logged in");
-      return;
-    }
     try {
-      const res = await axios.post("http://localhost:6969/add-question", {
-        text, options, correctAnswer
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setQuestions([...questions, res.data]);
-      setText("");
-      setOptions(["", "", "", ""]);
-      setCorrectAnswer("");
-      setShowAddForm(false);
-      alert("✅ Question added!");
+      const payload = { text, options, correctAnswer };
+
+      if (editingId) {
+        // Edit existing question
+        const res = await axios.put(
+          `http://localhost:6969/api/questions/${editingId}`,
+          payload,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setQuestions(questions.map(q => q._id === editingId ? res.data : q));
+        alert("✅ Question updated!");
+      } else {
+        // Add new question
+        const res = await axios.post(
+          "http://localhost:6969/api/questions",
+          payload,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setQuestions([...questions, res.data]);
+        alert("✅ Question added!");
+      }
+
+      resetForm();
     } catch (err) {
-      alert("❌ Error: " + err.message);
+      console.error(err);
+      alert("❌ Error saving question");
     }
   };
 
   // Delete question
   const handleDelete = async (id) => {
-    if(!token) return;
-    if(!window.confirm("Are you sure you want to delete this question?")) return;
+    if (!window.confirm("Are you sure you want to delete this question?")) return;
+
     try {
-      await axios.delete(`http://localhost:6969/delete-question/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
+      await axios.delete(`http://localhost:6969/api/questions/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
       });
-      setQuestions(questions.filter(q => q.id !== id));
-      alert("✅ Question deleted");
+      setQuestions(questions.filter(q => q._id !== id));
+      alert("✅ Question deleted!");
     } catch (err) {
-      alert("❌ Error: " + err.message);
+      console.error(err);
+      alert("❌ Error deleting question");
     }
   };
 
-  // Start editing
+  // Start editing a question
   const handleEdit = (question) => {
-    setEditingId(question.id);
+    setEditingId(question._id);
     setText(question.text);
     setOptions(question.options || ["", "", "", ""]);
     setCorrectAnswer(question.correctAnswer || "");
-  };
-
-  // Save edited question
-  const handleSaveEdit = async (e) => {
-    e.preventDefault();
-    if(!token) return;
-    try {
-      const res = await axios.put(`http://localhost:6969/edit-question/${editingId}`, {
-        text, options, correctAnswer
-      }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      setQuestions(questions.map(q => q.id === editingId ? res.data : q));
-      setEditingId(null);
-      setText("");
-      setOptions(["", "", "", ""]);
-      setCorrectAnswer("");
-      alert("✅ Question updated!");
-    } catch (err) {
-      alert("❌ Error: " + err.message);
-    }
+    setShowForm(true);
   };
 
   const handleOptionChange = (index, value) => {
@@ -108,16 +105,16 @@ const ManageQuestions = () => {
   return (
     <AdminLayout>
       <h1>Manage Questions</h1>
-      <button className="add-btn" onClick={() => setShowAddForm(!showAddForm)}>
-        {showAddForm ? "Close Form" : "Add New Question"}
+
+      <button className="add-btn" onClick={() => setShowForm(!showForm)}>
+        {showForm ? "Close Form" : "Add New Question"}
       </button>
 
-      {/* Add/Edit Form */}
-      {showAddForm || editingId ? (
-        <form className="add-question-form" onSubmit={editingId ? handleSaveEdit : handleAddQuestion}>
+      {(showForm || editingId) && (
+        <form className="question-form" onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="Enter question text"
+            placeholder="Question Text"
             value={text}
             onChange={(e) => setText(e.target.value)}
             required
@@ -141,9 +138,8 @@ const ManageQuestions = () => {
           />
           <button type="submit">{editingId ? "Save Changes" : "Add Question"}</button>
         </form>
-      ) : null}
+      )}
 
-      {/* Questions Table */}
       <div className="table-wrapper">
         <table>
           <thead>
@@ -155,12 +151,12 @@ const ManageQuestions = () => {
           </thead>
           <tbody>
             {questions.map((q) => (
-              <tr key={q.id}>
+              <tr key={q._id}>
                 <td>{q.text}</td>
-                <td>{q.options && q.options.length ? "MCQ" : "Descriptive"}</td>
+                <td>{q.options?.length ? "MCQ" : "Descriptive"}</td>
                 <td>
                   <button onClick={() => handleEdit(q)}>Edit</button>
-                  <button onClick={() => handleDelete(q.id)}>Delete</button>
+                  <button onClick={() => handleDelete(q._id)}>Delete</button>
                 </td>
               </tr>
             ))}
