@@ -4,6 +4,7 @@ const Submission = require("../models/Submission");
 const authMiddleware = require("../Middleware/authMiddleware");
 const adminMiddleware = require("../Middleware/adminMiddleware"); // optional if needed
 
+
 // =====================
 // POST new submission
 // =====================
@@ -32,6 +33,23 @@ router.post("/", authMiddleware, async (req, res) => {
     res.status(500).json({ error: "Server error", details: err.message });
   }
 });
+
+
+// =====================
+// GET all submissions (admin only)
+// =====================
+router.get("/", authMiddleware, adminMiddleware, async (req, res) => {
+  try {
+    const submissions = await Submission.find()
+      .populate("userId", "username email")
+      .populate("hackathonId", "title"); // optional: show hackathon title
+    res.json(submissions);
+  } catch (err) {
+    console.error("Error fetching all submissions:", err);
+    res.status(500).json({ error: "Server error", details: err.message });
+  }
+});
+
 
 // =====================
 // GET all submissions for a hackathon

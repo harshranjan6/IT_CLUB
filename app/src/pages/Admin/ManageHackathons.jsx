@@ -58,7 +58,7 @@ const ManageHackathons = () => {
         score: team.score ?? 0,
       }));
 
-      await axios.put(`http://localhost:6969/api/scores/${hackathonId}`, updatedScores, {
+      await axios.put(`http://localhost:6969/api/submissions/scores/${hackathonId}`, updatedScores, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

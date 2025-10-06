@@ -5,11 +5,13 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: #0b0f1a;
+  background-color: rgb(35, 32, 32);
   z-index: 1;
   position: relative;
   overflow: hidden;
   top: 0;
+  background-image: url(/images/home-bgi/v1016-b-09.jpg);
+  background-size: cover;
  
 }
 
@@ -217,3 +219,41 @@ canvas {
     right: 20px;
   }
 }
+
+/* Outer container */
+.div1 {
+  display: flex;
+  justify-content: center;   
+  padding: 10px;            
+  background-color: #1f245e; 
+  margin-top:2rem ;
+  border-radius: 15px;
+}
+
+.div3 {
+  display: flex;
+  justify-content: center;
+  margin: 4px;
+}
+
+/* Professional link styling */
+.github-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;                 /* space between icon and text */
+  color: #0404ea;           /* dark gray text */
+  text-decoration: none;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background-color: #0a4f94;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.github-link:hover {
+  background-color: #e5e7eb;  /* slightly darker on hover */
+  color: #000000;             /* text color on hover */
+  transform: translateY(-2px);
+}
+

@@ -106,6 +106,9 @@
 .team-card.right {
   flex-direction: row-reverse;
 }
+.team-card-link{
+  text-decoration: none;
+}
 
 .card-overlay {
   position: absolute;
